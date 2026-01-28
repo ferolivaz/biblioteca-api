@@ -7,8 +7,8 @@ on:
       - main
     paths:
       - 'BibliotecaAPI/**'
-      - 'BibliotecaAPITests/**'
-      - '.github/workflows/compilar-y-desplegar.yml'
+      - 'BibliotecaApiTest/**'
+      - '.github/workflows/Compilar_y_Desplegar.yml'
 
 env:                        #variable de ambiente
   VERSION_DOTNET: '9'

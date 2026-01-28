@@ -76,7 +76,7 @@ namespace BibliotecaApiTest.Controllers
             var respuesta = await controller.Post(AutorCreacionDTO);
 
             //verificacion
-            var resultado = respuesta as CreatedAtActionResult;
+            var resultado = respuesta as CreatedAtRouteResult;
             Assert.IsNotNull(resultado);
 
             var context2 = ConstruirContext(nombreBD);

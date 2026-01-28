@@ -1,0 +1,39 @@
+name: Compilar y desplegar
+
+on:
+  workflow_dispatch:    #corrida manual
+  push:
+    branches:
+      - main
+    paths:
+      - 'BibliotecaAPI/**'
+      - 'BibliotecaApiTest/**'
+      - '.github/workflows/Compilar y desplegar.yml'
+
+env:                        #variable de ambiente
+  VERSION_DOTNET: '9'
+  #AZURE_APP_SERVICE_NOMBRE: nombre-del-app-service
+  #AZURE_APP_SERVICE_UBICACION_PAQUETE: '.'
+
+jobs:
+  build:      #proceso de compilacion
+    runs-on: ubuntu-latest    #donde va a ejecutarse este job
+    env:
+      proyecto: BibliotecaAPI/BibliotecaAPI.csproj
+    steps:
+      - name: Checkout                    #lo primero que necesito son los archivos de mi proy
+        uses: actions/checkout@v4.2.2    # este se comando se busca aqui en git
+
+      - name: Instalar .NET        
+        uses: actions/setup-dotnet@v4.3.0    #setup netcore sdk
+        with:
+          dotnet-version: ${{ env.VERSION_DOTNET }}    #es la primera varaiable de ambiente
+
+      - name: Obteniendo las dependencias      #obtener dependdencias del proy
+        run: dotnet restore
+
+      - name: Compilar
+        run: dotnet build --no-restore        #no restore porque en el paso anterior ya se hizo
+
+      - name: Realizar pruebas
+        run: dotnet test --no-build      #nop build porque ya se hizo el com,pilado
